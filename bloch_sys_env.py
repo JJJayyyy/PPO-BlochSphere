@@ -12,49 +12,6 @@ class Continuous_BlochSphere(gym.Env):
     """
     Custom Environment to find a target position on a Bloch sphere. The position is represented using two angles, phi and theta.
 
-    ### Observation Space
-
-    The observation is a `ndarray` with shape `(2,)` where the elements correspond to the following:
-
-    | Num | Observation                          | Min  | Max | Unit         |
-    |-----|--------------------------------------|------|-----|--------------|
-    | 0   | position of the car along the x-axis | -Inf | Inf | position (m) |
-    | 1   | velocity of the car                  | -Inf | Inf | position (m) |
-
-    ### Action Space
-
-    The action is a `ndarray` with shape `(1,)`, representing the directional force applied on the car.
-    The action is clipped in the range `[-1,1]` and multiplied by a power of 0.0015.
-
-    ### Transition Dynamics:
-
-    Given an action, the mountain car follows the following transition dynamics:
-
-    *velocity<sub>t+1</sub> = velocity<sub>t+1</sub> + force * self.power - 0.0025 * cos(3 * position<sub>t</sub>)*
-
-    *position<sub>t+1</sub> = position<sub>t</sub> + velocity<sub>t+1</sub>*
-
-    where force is the action clipped to the range `[-1,1]` and power is a constant 0.0015.
-    The collisions at either end are inelastic with the velocity set to 0 upon collision with the wall.
-    The position is clipped to the range [-1.2, 0.6] and velocity is clipped to the range [-0.07, 0.07].
-
-    ### Reward
-
-    A negative reward of *-0.1 * action<sup>2</sup>* is received at each timestep to penalise for
-    taking actions of large magnitude. If the mountain car reaches the goal then a positive reward of +100
-    is added to the negative reward for that timestep.
-
-    ### Starting State
-
-    The position of the car is assigned a uniform random value in `[-0.6 , -0.4]`.
-    The starting velocity of the car is always assigned to 0.
-
-    ### Episode End
-
-    The episode ends if either of the following happens:
-    1. Termination: The position of the car is greater than or equal to 0.45 (the goal position on top of the right hill)
-    2. Truncation: The length of the episode is 999.
-
     """
 
     def __init__(self, 
