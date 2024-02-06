@@ -82,40 +82,12 @@ class Continuous_BlochSphere(gym.Env):
         return self.state, reward, done, False,  info
 
 
-        # position = self.state[0]
-        # velocity = self.state[1]
-        # force = min(max(action[0], self.min_action), self.max_action)
-
-        # velocity += force * self.power - 0.0025 * math.cos(3 * position)
-        # if velocity > self.max_speed:
-        #     velocity = self.max_speed
-        # if velocity < -self.max_speed:
-        #     velocity = -self.max_speed
-        # position += velocity
-        # if position > self.max_position:
-        #     position = self.max_position
-        # if position < self.min_position:
-        #     position = self.min_position
-        # if position == self.min_position and velocity < 0:
-        #     velocity = 0
-
-        # # Convert a possible numpy bool to a Python bool.
-        # terminated = bool(position >= self.goal_position and velocity >= self.goal_velocity)
-
-        # reward = 0
-        # if terminated:
-        #     reward = 100.0
-        # reward -= math.pow(action[0], 2) * 0.1
-
-        # self.state = np.array([position, velocity], dtype=np.float32)
-        # return self.state, reward, terminated, False, {}
-
 
     def reset(self, *, seed: Optional[int] = None, options: Optional[dict] = None):
         super().reset(seed=seed)
         self.state = self.observation_space.sample()
-        # self.target_phi = np.random.uniform(0, np.pi)
-        # self.target_theta = np.random.uniform(0, 2*np.pi)
+        self.target_phi = np.random.uniform(0, np.pi)
+        self.target_theta = np.random.uniform(0, 2*np.pi)
         return np.array(self.state, dtype=np.float32), {}
 
 
